@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+        <div class="card o-hidden border-0 shadow-lg my-5" style="margin: 2%;width: 80%;left: 9%">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-5 d-none d-lg-block bg-register-image"><img class="position-absolute w-100 h-100" src="{{asset('img/1.jpg')}}" style="object-fit: cover;"></div>
+                    <div class="col-lg-7">
+                        <div class="p-5">
+             {% for message in app.flashes('danger') %}
+              <p class="alert alert-danger">{{message}}</p>
+              {% endfor %}
+              <h4>Bonjour! Bienvenue</h4>
+              <h6 class="font-weight-light">Crée ton compte maintenant</h6>
+              <form class="pt-3" method="post" action="{{path('app_save_user')}}">
+                <div class="form-group">
+                  <input type="email" value="" name="email" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="email" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" value="" name="nom" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="nom" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" value="" name="prenom" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="prenom" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" value="" name="telephone" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="phone" required>
+                </div>
+                <div class="form-group">
+                  <input type="password" name="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password" required>
+                </div>
+
+                <div class="mt-3">
+                  <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">SIGN IN</button>
+                </div>
+                
+                <div class="text-center mt-4 font-weight-light">
+                  vous avez deja un compte? <a href="{{ path('app_login') }}" class="text-primary"> Connecte toi </a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+{% endblock %}
+
+

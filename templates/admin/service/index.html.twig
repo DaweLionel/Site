@@ -1,0 +1,42 @@
+{% extends 'base2.html.twig' %}
+{% block style %}
+    <style>
+        ul {display: none;}
+    </style>
+{% endblock style %}
+{% block title %}Admin services!{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+<div class="card shadow mb-4" style="padding:2%; ">
+<div class="card-header py-3">
+{% for message in app.flashes('success') %}
+<p class="alert alert-success">{{message}}</p>
+{% endfor %}
+<h2>Listes de vos services  <a class="btn btn-primary" href="{{path('app_form_services')}}">+Ajouter un service?</a></h2>
+</div>
+<table class="table table-responsive table-striped" cellpadding="2%" cellspacing="5%">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prix</th>
+            <th>Categorie</th>
+            <th>actions</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for service in services %} 
+        <tr>
+            <td>{{service.nom}}</td>
+            <td>{{service.prix}}</td>
+            <td>{{service.categories.nom}}</td>
+            <td><a  class="btn btn-success"  href="{{path('app_recup_services',{'id':service.id})}}">modifier</a><SPan>       </SPan><a onclick="return confirm('Voulez-vous vraiment supprimer?')"; class="btn btn-danger" href="{{path('app_delete_service',{'id':service.id})}}">supprimer</a><SPan></SPan></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+            
+
+</div>
+{% endblock %}

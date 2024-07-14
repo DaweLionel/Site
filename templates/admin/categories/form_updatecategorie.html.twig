@@ -1,0 +1,38 @@
+{% extends 'base2.html.twig' %}
+{% block body %}
+        <div class="card o-hidden border-0 shadow-lg my-5" style="margin: 2%">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-5 d-none d-lg-block bg-register-image"><img class="position-absolute w-100 h-100" src="{{asset('img/5.jpg')}}" style="object-fit: cover;"></div>
+                    <div class="col-lg-7">
+                        <div class="p-5">
+                        {% for message in app.flashes('success') %}
+                            <p class="alert alert-success">{{message}}</p>
+                        {% endfor %}
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Modifier un categorie!</h1>
+                            </div>
+                            <form action="{{path('app_update_categories',{'id':categorie.id})}}" method="post" enctype="multipart/form-data">
+
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-lg" id="exampleInputEmail" value="{{categorie.nom}}"
+                                        placeholder="Nom categorie" name="nom">
+                                </div>
+                                <div class="form-group">
+                                    <textarea class="form-control " id="exampleInputEmail" name="description" class="form-control form-control-plaintext" value="{{categorie.description}}"
+                                        placeholder="Description"></textarea>
+                                </div>
+                                <div class="form-group">
+                                        <input type="file" value="{{categorie.image}}" class="form-control form-control-lg" name="image" placeholder="image">
+                                </div>
+                                <button type="" class="btn btn-google btn-user btn-block">
+                                    <i class="fab fa-google fa-fw"></i> Enregistrer
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

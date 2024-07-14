@@ -1,0 +1,83 @@
+{% extends 'base2.html.twig' %}
+
+{% block title %}Disponibilite{% endblock %}
+
+{% block body %}
+
+       
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f7abe4b4;
+        }
+    </style>
+
+    <div class="container">
+        <span style="font-size: 25px;">Disponibilités </span>  <form action="{{path('app_disponibilite_list')}}" method="get"
+        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+        <div class="input-group">
+            <input type="date" class="form-control bg-light border-0 small" name="search" placeholder="Search for..."
+                aria-label="Search" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <button class="btn btn-danger" type="submit">
+                    <i class="fas fa-search fa-sm"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+      
+    <table>
+        <thead>
+            <tr>
+                <th>Jour</th>
+                <th>Début</th>
+                <th>Fin</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if datas is not empty %}
+                {% for date, data in datas %}
+                    {% for temps in data.time %}
+                        <tr>
+                            {% if loop.index0 == 0 %}
+                                <td rowspan="{{ data.time|length }}">
+                                    {{ data.jour ? data.jour|date('d-m-Y') : '' }}
+                                </td>
+                            {% endif %}
+                            <td>{{ temps.getStartTime ? temps.getStartTime|date('H:i:s') : '' }}</td>
+                            <td>{{ temps.getEndTime ? temps.getEndTime|date('H:i:s') : '' }}</td>
+                            <td>
+                               <a class="btn btn-danger" onclick="return confirm('voulez vous vraiment supprimer ce creneau ?');" href="{{path('app_disponibilite_delete',{id:temps.id})}}">Supprimer</a>
+
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="3">Aucun enregistrement trouvé</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+    
+
+    </div>
+    
+{% endblock %}
