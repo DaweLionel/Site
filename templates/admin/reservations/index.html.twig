@@ -1,0 +1,44 @@
+{% extends 'base2.html.twig' %}
+{% block style %}
+    <style>
+        ul {display: none;}
+    </style>
+{% endblock style %}
+{% block title %}Admin reservations!{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+<div class="card shadow mb-4" style="padding:2%; ">
+<div class="card-header py-3">
+{% for message in app.flashes('success') %}
+<p class="alert alert-success">{{message}}</p>
+{% endfor %}
+<h2>Listes de vos reservations  </h2>
+</div>
+<table class="table table-responsive table-striped" cellpadding="2%" cellspacing="5%">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>service</th>
+            <th>date_prévue</th>
+            <th>horaires</th>
+            <th>actions</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for reservation in reservations %} 
+        <tr>
+            <td>{{reservation.user.nom}}</td>
+            <td>{{reservation.services.nom}}</td>
+            <td>{{reservation.creneau.dateDebut|date("m/d/Y")}}</td>
+            <td>{{reservation.creneau.dateDebut|date("h:m")}} - {{reservation.creneau.dateFin|date("h:m")}}</td>
+            <td><a  class="btn btn-success"  onclick="return confirm('Confirmer-vous que la reservation a été consommée?')"; href="{{path('app_valid_reservation',{'id':reservation.id})}}">Valider</a><SPan> </SPan><a onclick="return confirm('Voulez-vous vraiment anuler cette reservation?')"; class="btn btn-danger" href="{{path('app_anuler_reservation',{'id':reservation.id})}}">supprimer</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+            
+
+</div>
+{% endblock %}

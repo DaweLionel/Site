@@ -4,9 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Services;
 use App\Entity\Categories;
+use App\Entity\Reservation;
+use App\Repository\UserRepository;
 use App\Repository\ServicesRepository;
 use App\Repository\CategoriesRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\ReservationRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -228,7 +231,45 @@ class AdminController extends AbstractController
         return $this->redirectToRoute('app_admincategories');
     }
 
+    #[Route('/admin_reservation', name: 'app_admin_reservation')]
+    public function add_reservation(Request $request,EntityManagerInterface $emi,ReservationRepository $reservationrepo,ServicesRepository $servicerepo): Response
+    {
+        
+        $reservations = $reservationrepo->findBy(['actif'=>true,'etat'=>true],['id'=>'desc']);
+        return $this->render('admin/reservations/index.html.twig', [
+            'reservations' => $reservations,
+        ]);
+    }
 
+    #[Route('/valid_reservation/{id}', name: 'app_valid_reservation')]
+    public function valider_reservation($id,Request $request,EntityManagerInterface $emi,ReservationRepository $reservationrepo,ServicesRepository $servicerepo): Response
+    {
+        
+        $reservation = $reservationrepo->find($id);
+        $reservation->setEtat(false);
+        $emi->persist($reservation);
+        $emi->flush();
+        $this->addFlash(
+           'success',
+           'Réservation consommée'
+        );
+        return $this->redirectToRoute('app_admin_reservation');
+    }
+
+    #[Route('/anuler_reservation/{id}', name: 'app_anuler_reservation')]
+    public function anuler_reservation($id,Request $request,EntityManagerInterface $emi,ReservationRepository $reservationrepo,ServicesRepository $servicerepo): Response
+    {
+        
+        $reservation = $reservationrepo->find($id);
+        $reservation->setActif(false);
+        $emi->persist($reservation);
+        $emi->flush();
+        $this->addFlash(
+           'success',
+           'Réservation Anulée!'
+        );
+        return $this->redirectToRoute('app_admin_reservation');
+    }
 
 
 

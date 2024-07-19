@@ -28,6 +28,9 @@ class Reservation
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?Creneau $creneau = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $etat = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -89,6 +92,18 @@ class Reservation
     public function setCreneau(?Creneau $creneau): static
     {
         $this->creneau = $creneau;
+
+        return $this;
+    }
+
+    public function isEtat(): ?bool
+    {
+        return $this->etat;
+    }
+
+    public function setEtat(?bool $etat): static
+    {
+        $this->etat = $etat;
 
         return $this;
     }
