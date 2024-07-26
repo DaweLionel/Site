@@ -11,6 +11,7 @@
     }
 
     h1 {
+        
         text-align: center;
     }
 
@@ -69,8 +70,9 @@
         const datesContainer = document.getElementById('dates-container');
         const timeSlotsContainer = document.getElementById('time-slots-container');
         const dateIdInput = document.getElementById('date-id');
+
        // const getUrl = 'http://127.0.0.1:8000'; // cette url doit changer en ligne de production
-        const getUrl = 'https://therapie.consolidis.com/Site/public/index.php/'; 
+        const getUrl = 'https://therapie.consolidis.com/Site/public/index.php'; 
         dateForm.addEventListener('submit', function (event) {
             event.preventDefault();
             const date = dateForm.date.value;
