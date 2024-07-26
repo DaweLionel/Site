@@ -31,8 +31,8 @@
         <tr>
             <td>{{reservation.user.nom}}</td>
             <td>{{reservation.services.nom}}</td>
-            <td>{{reservation.creneau.dateDebut|date("m/d/Y")}}</td>
-            <td>{{reservation.creneau.dateDebut|date("h:m")}} - {{reservation.creneau.dateFin|date("h:m")}}</td>
+            <td>{{reservation.timeSlots.date.date|date("m/d/Y")}}</td>
+            <td>{{reservation.timeSlots.startTime|date("H:m")}} : {{reservation.timeSlots.endTime|date("H:m")}}</td>
             <td><a  class="btn btn-success"  onclick="return confirm('Confirmer-vous que la reservation a été consommée?')"; href="{{path('app_valid_reservation',{'id':reservation.id})}}">Valider</a><SPan> </SPan><a onclick="return confirm('Voulez-vous vraiment anuler cette reservation?')"; class="btn btn-danger" href="{{path('app_anuler_reservation',{'id':reservation.id})}}">supprimer</a></td>
         </tr>
         {% endfor %}
