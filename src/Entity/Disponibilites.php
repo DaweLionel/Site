@@ -21,6 +21,9 @@ class Disponibilites
     #[ORM\OneToMany(targetEntity: TimeSlots::class, mappedBy: 'date', orphanRemoval: true)]
     private Collection $timeSlots;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $statut = null;
+
     public function __construct()
     {
         $this->timeSlots = new ArrayCollection();
@@ -69,6 +72,18 @@ class Disponibilites
                 $timeSlot->setDate(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isStatut(): ?bool
+    {
+        return $this->statut;
+    }
+
+    public function setStatut(?bool $statut): static
+    {
+        $this->statut = $statut;
 
         return $this;
     }

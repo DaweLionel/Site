@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello Reservation{% endblock %}
+
+{% block body %}
+    <style>
+        .calendar-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .calendar-day {
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            color: black;
+            font-weight: bold;
+        }
+        .calendar-day.green {
+            background-color: #7bbf6a;
+        }
+        .calendar-day.red {
+            background-color: #dc3545;
+        }
+        .calendar-day.orange {
+            background-color: #fd7e16
+        }
+        .calendar-day.yellow {
+            background-color: #ffc107;
+        }
+        .calendar-day:hover .description {
+            display: block;
+        }
+        .description {
+            display: none;
+            text-align: center;
+        }
+        .show-more {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+
+    <div class="container text-center">
+        <h1>Choisissez un jour</h1>
+        <p>Therapie-Yde</p>
+        <p><form action="{{path('app_services_reservation',{id:idservices})}}" method="get"
+            class=" d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 ">
+            <div class="input-group">
+                <input type="date" class="form-control bg-light border-0 small" name="search" placeholder="Search for..."
+                    aria-label="Search" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-danger" type="submit">
+                        <i class="fas fa-search fa-sm"></i>
+                    </button>
+                </div>
+            </div>
+        </form></p>
+        <div class="calendar-container">
+        
+            {% if jours is not empty %}
+            {% for i in 0..jours|length - 1 %}
+            <a style="text-decoration: none;" href="{{path('app_services_heurs',{idservice:idservices,idjour:jours[i].id})}}">
+                <div class="calendar-day {{ couleurs[i] }}">
+                    <span>{{ jours[i].date|date('D') }}</span>
+                    <span>{{ jours[i].date|date('d M.Y') }}</span>
+                </div>
+            </a>
+               
+            {% endfor %}
+            {% else %}
+            <p>Aucune disponibilité trouvée.</p>
+        {% endif %}
+        </div>
+       
+    </div>
+
+{% endblock %}

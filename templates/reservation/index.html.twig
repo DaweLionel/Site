@@ -16,20 +16,41 @@
     </div>
 </div>
 <!-- Header End -->
+    <div class="container">
+        <h1> Mes reservations</h1>
 
-    <!-- Service Start -->
-    <div class="container-fluid px-0 py-5 my-5">
-        <div class="row mx-0 justify-content-center text-center">
-            <div class="col-lg-6">
-                <h6 class="d-inline-block bg-light text-primary text-uppercase py-1 px-2">Our Reservation</h6>
-                <h1>Yde-Reservation</h1>
-            </div>
-        </div>
-       
-            </div>
-            <h1 style="margin-left: 20;">Aucune Reservation pour le moment</h1>
-        </div>
+        <table class="table table-responsive table-striped">
+            <thead>
+                <tr>
+                    <th>Jour</th>
+                    <th>Service(s)</th>
+                    <th>Prix</th>
+                    <th>créneaux</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for reservation in reservations %}
+                <tr>
+                    <td>{{ reservation.timeSlots.date.date ? reservation.timeSlots.date.date|date('d-m-Y') : '' }}</td>
+                    <td>{{ reservation.services.nom }}</td>
+                    <td>{{ reservation.services.prix }} €</td>
+                    <td>{{ reservation.timeSlots.startTime ? reservation.timeSlots.startTime|date('H:i') : '' }} - {{ reservation.timeSlots.endTime ? reservation.timeSlots.endTime|date('H:i') : '' }} </td>
+                    <td>
+                        <a onclick="return confirm('voulez vous vraiment annuler cette reservation ?');" class="btn btn-primary" href="{{path('app_reservation_annuler',{id:reservation.id})}}">Annuler</a>
+                       
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5"> Vous n'avez aucune reservation pour l'instant</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
-    <!-- Service End -->
+  
+
+   
 
 {% endblock %}

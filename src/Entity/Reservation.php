@@ -25,11 +25,13 @@ class Reservation
     #[ORM\ManyToOne(inversedBy: 'service')]
     private ?Services $services = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Creneau $creneau = null;
 
     #[ORM\Column(nullable: true)]
     private ?bool $etat = null;
+
+    #[ORM\ManyToOne(inversedBy: 'reservations')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?TimeSlots $timeSlots = null;
 
     public function getId(): ?int
     {
@@ -84,17 +86,6 @@ class Reservation
         return $this;
     }
 
-    public function getCreneau(): ?Creneau
-    {
-        return $this->creneau;
-    }
-
-    public function setCreneau(?Creneau $creneau): static
-    {
-        $this->creneau = $creneau;
-
-        return $this;
-    }
 
     public function isEtat(): ?bool
     {
@@ -104,6 +95,18 @@ class Reservation
     public function setEtat(?bool $etat): static
     {
         $this->etat = $etat;
+
+        return $this;
+    }
+
+    public function getTimeSlots(): ?TimeSlots
+    {
+        return $this->timeSlots;
+    }
+
+    public function setTimeSlots(?TimeSlots $timeSlots): static
+    {
+        $this->timeSlots = $timeSlots;
 
         return $this;
     }

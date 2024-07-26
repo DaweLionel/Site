@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello Service{% endblock %}
+
+{% block body %}
+
+<style>
+    .category-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 4%;
+    }
+
+    .category-card img {
+        width: 310px;
+        height: 300px;
+        object-fit: cover;
+    }
+
+    .service-list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+    .service-item {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        margin-top: 5px;
+    }
+</style>
+
+<!-- Header Start -->
+<div class="jumbotron jumbotron-fluid bg-jumbotron" style="margin-bottom: 90px;">
+    <div class="container text-center py-5">
+        <h3 class="text-white display-3 mb-4">Services</h3>
+        <div class="d-inline-flex align-items-center text-white">
+            <p class="m-0"><a class="text-white" href="">Home</a></p>
+            <i class="far fa-circle px-3"></i>
+            <p class="m-0">Services</p>
+        </div>
+    </div>
+</div>
+<!-- Header End -->
+<!-- Shop Detail Start -->
+<div class="container-fluid pb-5">
+    <div class="row px-xl-5">
+        <div class="col-lg-5 mb-30">
+            <div id="product-carousel" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner bg-light">
+                    <div class="carousel-item active">
+                        <img class="w-100 h-100" src="{{asset('image/categories/'~ categorie.image)}}" alt="Image">
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-lg-7 h-auto mb-30">
+            <div style="padding: 20px;" class="h-100 bg-light">
+                <h3>{{categorie.nom}}</h3>
+
+
+                <p class="mb-4"> {{categorie.description|raw}} </p>
+                <div class="container">
+                    <div class="row">
+                        {% for service in categorie.services %}
+                        <!-- Example Category Card -->
+                        <div class="col-md-3 category-card">
+                            <div class="card">
+                                <span> <a class="btn btn-primary px-3" href="{{path('app_services_reservation',{id:service.id})}}">{{service.nom}}</a> <br></span>
+                                <span style="text-align: center;">{{service.prix}} €</span>
+            
+                              
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- Footer End -->
+
+
+{% endblock %}

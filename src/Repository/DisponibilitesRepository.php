@@ -21,6 +21,18 @@ class DisponibilitesRepository extends ServiceEntityRepository
         parent::__construct($registry, Disponibilites::class);
     }
 
+
+    public function findAllDistinctDates()
+    {
+        return $this->createQueryBuilder('d')
+            ->select('DISTINCT d.date')
+            ->join('d.timeSlots', 't')
+            ->orderBy('d.date', 'desc')
+            ->getQuery()
+            ->getResult();
+    }
+
+
 //    /**
 //     * @return Disponibilites[] Returns an array of Disponibilites objects
 //     */

@@ -33,9 +33,9 @@
         <div class="row py-2 px-lg-5">
             <div class="col-lg-6 text-left mb-2 mb-lg-0">
                 <div class="d-inline-flex align-items-center">
-                    <small><i class="fa fa-phone-alt mr-2"></i>+32 465 45 80 54</small>
+                    <small><i class="fa fa-phone-alt mr-2"></i>0465458054</small>
                     <small class="px-3">|</small>
-                    <small><i class="fa fa-envelope mr-2"></i>info@example.com</small>
+                    <small><i class="fa fa-envelope mr-2"></i>Lydevibes@gmail.com</small>
                 </div>
             </div>
             <div class="col-lg-6 text-right">
@@ -75,9 +75,11 @@
                 <div class="navbar-nav m-auto py-0">
                     <a href="{{path('app_home')}}" class="nav-item nav-link active">Home</a>
                     <a href="{{path('app_services')}}" class="nav-item nav-link">Services</a>
+                    {% if app.user %}
                     <a href="{{path('app_reservation')}}" class="nav-item nav-link">Reservation</a>
+                    {% endif %}
                     <a href="{{path('app_contact')}}" class="nav-item nav-link">Contact</a> 
-                    <a href="#"></a>
+                   
                     {% if app.user %}
                     <a href="{{path('app_logout')}}" class="nav-item nav-link">Deconnexion</a>
                    {% else %}
@@ -85,7 +87,7 @@
                     {% endif %}
                  
                 </div>
-                <a href="" class="btn btn-primary d-none d-lg-block">Prendre un rendez-vous</a>
+                <a href="{{path('app_services')}}" class="btn btn-primary d-none d-lg-block">Prendre un rendez-vous</a>
             </div>
         </nav>
     </div>
@@ -105,9 +107,9 @@
                     <p> L'objectif est vous offrir une expérience de relaxation et de soin, en combinant techniques et écoute
                         pour répondre à vos besoins. Venez découvrir les bienfaits d'un massage personnalisé, ou chaque
                         séance est une invitation à la détente et à l'harmonie.</p>
-                    <p><i class="fa fa-map-marker-alt mr-2"></i>123 Street, New York, USA</p>
-                    <p><i class="fa fa-phone-alt mr-2"></i>+012 345 67890</p>
-                    <p><i class="fa fa-envelope mr-2"></i>info@example.com</p>
+                    <p><i class="fa fa-map-marker-alt mr-2"></i>Etterbeek, Belgique, EUROPE</p>
+                    <p><i class="fa fa-phone-alt mr-2"></i>0465458054</p>
+                    <p><i class="fa fa-envelope mr-2"></i>Lydevibes@gmail.com</p>
                     <div class="d-flex justify-content-start mt-4">
                         <a class="btn btn-lg btn-primary btn-lg-square mr-2" href="#"><i class="fab fa-twitter"></i></a>
                         <a class="btn btn-lg btn-primary btn-lg-square mr-2" href="#"><i class="fab fa-facebook-f"></i></a>
@@ -122,9 +124,9 @@
                             <div class="d-flex flex-column justify-content-start">
                                 <a class="text-white-50 mb-2" href="{{path('app_home')}}"><i class="fa fa-angle-right mr-2"></i>Home</a>
                                
-                                <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Our Services</a>
-                                <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Your Reservation</a>
-                                <a class="text-white-50" href="#"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
+                                <a class="text-white-50 mb-2" href="{{path('app_services')}}"><i class="fa fa-angle-right mr-2"></i>Our Services</a>
+                                <a class="text-white-50 mb-2" href="{{path('app_reservation')}}"><i class="fa fa-angle-right mr-2"></i>Your Reservation</a>
+                                <a class="text-white-50" href="{{path('app_contact')}}"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
                             </div>
                         </div>
                         <div class="col-sm-6 mb-5">

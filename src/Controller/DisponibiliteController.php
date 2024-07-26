@@ -27,7 +27,7 @@ class DisponibiliteController extends AbstractController
     }
     #[Route('/list', name: 'app_disponibilite_list', methods: ['GET'])]
     public function list(DisponibilitesRepository $disponibilitesRepository, TimeSlotsRepository $timeSlotRepository,
-     Request $request): Response
+     Request $request, EntityManagerInterface $emi): Response
     {
          
         $search = $request->query->get('search');
@@ -35,8 +35,26 @@ class DisponibiliteController extends AbstractController
         if ($search) {
 
            $convert = new DateTimeImmutable($search);
+           $lesdispos = $disponibilitesRepository->findBy(['date'=>$convert, 'statut'=>true], ['date' => 'ASC']);
            
-            $lesdisponibilites = $disponibilitesRepository->findBy(['date'=>$convert], ['id' => 'desc']);
+           $today = new DateTimeImmutable('today');
+
+
+           foreach ($lesdispos as $ladispos) {
+              if (($ladispos->getDate()->format('Y-m-d')) < ($today->format('Y-m-d'))) {
+              
+
+               $ladispos->setStatut(false);
+
+               $emi->persist($ladispos);
+               $emi->flush();
+
+
+              }
+           }
+
+
+            $lesdisponibilites = $disponibilitesRepository->findBy(['date'=>$convert, 'statut'=>true], ['date' => 'ASC']);
 
        
 
@@ -53,9 +71,31 @@ class DisponibiliteController extends AbstractController
                 $data[$date]['time'] = array_merge($data[$date]['time'], $lesdisponibilite->getTimeSlots()->toArray());
             }
         }else{
-            $lesdisponibilites = $disponibilitesRepository->findBy([], ['id' => 'desc']);
 
-       
+
+            $lesdispos = $disponibilitesRepository->findBy(['statut'=>true], ['date' => 'ASC']);
+
+          //  $dates = $disponibilitesRepository->findAllDistinctDates();
+
+            $today = new DateTimeImmutable('today');
+
+
+            foreach ($lesdispos as $ladispos) {
+               if (($ladispos->getDate()->format('Y-m-d')) < ($today->format('Y-m-d'))) {
+               
+
+                $ladispos->setStatut(false);
+
+                $emi->persist($ladispos);
+                $emi->flush();
+
+
+               }
+            }
+
+
+            $lesdisponibilites = $disponibilitesRepository->findBy(['statut'=>true], ['date' => 'ASC']);
+         //  dd($dates, $lesdisponibilites, $today);
 
             $data = [];
             foreach ($lesdisponibilites as $lesdisponibilite) {
@@ -89,7 +129,8 @@ class DisponibiliteController extends AbstractController
         try {
             // Create new Disponibilite entity
             $jour = new Disponibilites();
-            $jour->setDate(new \DateTimeImmutable($data['date']));
+            $jour->setDate(new \DateTimeImmutable($data['date']))
+                 ->setStatut(true);
             $emi->persist($jour);
             $emi->flush();
             //  http://localhost:8000/admin/disponibilite/new

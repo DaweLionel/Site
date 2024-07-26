@@ -73,4 +73,28 @@ class RegistrationController extends AbstractController
         }
 
     }
+
+    #[Route('/user/init', name: 'app_save_user_init')]
+    public function init(UserPasswordHasherInterface $userhash,EntityManagerInterface $em): Response
+    {
+        
+     
+            $user = new User;
+            $user->setNom('test')
+                 ->setPrenom('test')
+                 ->setTelephone('696000000')
+                 ->setEmail('test.admin@gmail.com')
+                 ->setPassword($userhash->hashPassword(
+                    $user,
+                   'sexiumsy10.0'
+            ))
+                 ->setRoles(['ROLE_ADMIN'])
+                 ->setActif(true);
+             $em->persist($user);
+             $em->flush();
+             $this->addFlash('success','inscription reussie');
+            return $this->redirectToRoute('app_login');
+       
+
+    }
 }
